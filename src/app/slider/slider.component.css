@@ -1,0 +1,16 @@
+.content {
+  position: relative;
+}
+
+.label {
+  position: absolute;
+  z-index: -1;
+}
+
+mat-slider {
+  width: 300px;
+}
+
+mat-form-field {
+  width: 64px;
+}
