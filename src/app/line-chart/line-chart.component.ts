@@ -40,7 +40,7 @@ export class LineChartComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // if (this.data.length == 0) return
+    if (this.data.length == 0) return
     for (let propName in changes) {
       let change = changes[propName];
       let curVal = JSON.stringify(change.currentValue);
@@ -54,8 +54,8 @@ export class LineChartComponent implements OnInit, OnChanges {
     let line0: Line<any>;
     let line: Line<any>;
 
-    this.xScale.domain(this.options.xDomain || d3.extent(this.data, function(d) { return d.x }))
-    this.yScale.domain(this.options.yDomain || d3.extent(this.data, function(d) { return d.y }))
+    this.xScale.domain(this.options.xDomain)
+    this.yScale.domain(this.options.yDomain)
     selector.select<SVGGElement>('.axis--x').transition(this.t).call(this.xAxis);
     selector.select<SVGGElement>('.axis--y').transition(this.t).call(this.yAxis);
 
@@ -92,7 +92,6 @@ export class LineChartComponent implements OnInit, OnChanges {
     let t = this.t;
     let selector = this.selector;
     let d3G = this.d3G;
-    let data = this.data;
     let xScale = this.xScale;
     let yScale = this.yScale;
     let xAxis = this.xAxis;
@@ -101,8 +100,6 @@ export class LineChartComponent implements OnInit, OnChanges {
     let margin = this.options.line.margin || this.options.margin;
     let width: number;
     let height: number;
-    let xDomain: [number, number];
-    let yDomain: [number, number];
     let brush: BrushBehavior<any>;
     let idleTimeout: number | null;
     let idleDelay: number;
@@ -119,8 +116,8 @@ export class LineChartComponent implements OnInit, OnChanges {
           });
           return idleTimeout;
         }
-        xScale.domain(xDomain);
-        yScale.domain(yDomain);
+        xScale.domain(self.options.xDomain);
+        yScale.domain(self.options.yDomain);
       } else {
         xScale.domain([s[0][0], s[1][0]].map(xScale.invert, xScale));
         yScale.domain([s[1][1], s[0][1]].map(yScale.invert, yScale));
@@ -154,11 +151,9 @@ export class LineChartComponent implements OnInit, OnChanges {
         (padding.left + margin.left) + ',' +
         (padding.top + margin.top) + ')')
 
-      if (data.length == 0) return
-      xDomain = this.options.xDomain || d3.extent(this.data, function(d) { return d.x });
-      yDomain = this.options.yDomain || d3.extent(this.data, function(d) { return d.y });
-      xScale = this.xScale = d3.scaleLinear().domain(xDomain).range([0, width]);
-      yScale = this.yScale = d3.scaleLinear().domain(yDomain).range([height, 0]);
+      if (this.data.length == 0) return
+      xScale = this.xScale = d3.scaleLinear().domain(this.options.xDomain).range([0, width]);
+      yScale = this.yScale = d3.scaleLinear().domain(this.options.yDomain).range([height, 0]);
 
       xAxis = this.xAxis = d3.axisBottom<number>(xScale).ticks(12);
       yAxis = this.yAxis = d3.axisLeft<number>(yScale).ticks(12 * height / width);
@@ -180,7 +175,7 @@ export class LineChartComponent implements OnInit, OnChanges {
         .attr('class', 'lines');
 
       d3G.selectAll<SVGPathElement, number[]>('path')
-        .data([data])
+        .data([this.data])
         .enter().append<SVGPathElement>('path')
         .attr("class", "line")
         .attr("d", line0);

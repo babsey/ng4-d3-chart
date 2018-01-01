@@ -52,8 +52,8 @@ export class ScatterChartComponent implements OnInit, OnChanges {
     let selector = this.selector;
     let d3G = this.d3G;
 
-    this.xScale.domain(this.options.xDomain || d3.extent(this.data, function(d) { return d.x }))
-    this.yScale.domain(this.options.yDomain || d3.extent(this.data, function(d) { return d.y }))
+    this.xScale.domain(this.options.xDomain)
+    this.yScale.domain(this.options.yDomain)
     selector.select<SVGGElement>('.axis--x').transition(this.t).call(this.xAxis);
     selector.select<SVGGElement>('.axis--y').transition(this.t).call(this.yAxis);
 
@@ -93,8 +93,6 @@ export class ScatterChartComponent implements OnInit, OnChanges {
     let margin = this.options.scatter.margin || this.options.margin;
     let width: number;
     let height: number;
-    let xDomain: [number, number];
-    let yDomain: [number, number];
     let brush: BrushBehavior<any>;
     let idleTimeout: number | null;
     let idleDelay: number;
@@ -109,8 +107,8 @@ export class ScatterChartComponent implements OnInit, OnChanges {
           });
           return idleTimeout;
         }
-        xScale.domain(xDomain);
-        yScale.domain(yDomain);
+        xScale.domain(self.options.xDomain);
+        yScale.domain(self.options.yDomain);
       } else {
         xScale.domain([s[0][0], s[1][0]].map(xScale.invert, xScale));
         yScale.domain([s[1][1], s[0][1]].map(yScale.invert, yScale));
@@ -153,10 +151,8 @@ export class ScatterChartComponent implements OnInit, OnChanges {
         (padding.top + margin.top) + ')')
 
       if (this.data.length == 0) return
-      xDomain = this.options.xDomain || d3.extent(this.data, function(d) { return d.x });
-      yDomain = this.options.yDomain || d3.extent(this.data, function(d) { return d.y });
-      xScale = this.xScale = d3.scaleLinear().domain(xDomain).range([0, width]);
-      yScale = this.yScale = d3.scaleLinear().domain(yDomain).range([height, 0]);
+      xScale = this.xScale = d3.scaleLinear().domain(this.options.xDomain).range([0, width]);
+      yScale = this.yScale = d3.scaleLinear().domain(this.options.yDomain).range([height, 0]);
 
       xAxis = this.xAxis = d3.axisBottom<number>(xScale).ticks(12);
       yAxis = this.yAxis = d3.axisLeft<number>(yScale).ticks(12 * height / width);
