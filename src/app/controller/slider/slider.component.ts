@@ -11,7 +11,7 @@ export class SliderComponent {
     @Input() options: any;
     @Output() changed = new EventEmitter();
 
-    onChange() {
+    update() {
         this.changed.emit();
     }
 }

@@ -160,7 +160,7 @@ export class LineChartComponent implements OnInit, OnChanges {
                 .attr('class', 'brush')
                 .call(brush);
 
-            selector.select<SVGGElement>('g.overlay')
+            selector.select<SVGGElement>('.overlay')
                 .attr('height', height)
                 .attr('width', width);
 

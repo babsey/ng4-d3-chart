@@ -1,0 +1,8 @@
+<div class="content">
+    <div>{{ options.label }}</div>
+    <mat-slider [(ngModel)]="options.value" [min]="options.min" [max]="options.max" [step]="options.step" (change)="update()">
+    </mat-slider>
+    <mat-form-field>
+        <input matInput type="number" [(ngModel)]="options.value" [step]="options.step" (change)="update()">
+    </mat-form-field>
+</div>

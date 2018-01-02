@@ -1,0 +1,5 @@
+<div class="controller" *ngFor="let sliderOpt of options">
+    <app-slider id="sliderOpt.id" [options]="sliderOpt" (changed)="update()"></app-slider>
+</div>
+
+<button (click)="update()">Update data</button> {{ options.xDomain }} {{ options.xDomain0 }}
