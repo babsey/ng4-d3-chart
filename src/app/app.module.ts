@@ -16,24 +16,24 @@ import { ScatterChartComponent } from './scatter-chart/scatter-chart.component';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SliderComponent,
-    LineChartComponent,
-    ScatterChartComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    MatInputModule,
-    MatCardModule,
-    NoopAnimationsModule,
-    MatFormFieldModule,
-    MatSliderModule,
-  ],
-  providers: [
-    D3Service
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        SliderComponent,
+        LineChartComponent,
+        ScatterChartComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        MatInputModule,
+        MatCardModule,
+        NoopAnimationsModule,
+        MatFormFieldModule,
+        MatSliderModule,
+    ],
+    providers: [
+        D3Service
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

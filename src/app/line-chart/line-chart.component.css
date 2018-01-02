@@ -1,5 +1,5 @@
-:host ::ng-deep .line  {
-  fill: none;
-  stroke: steelblue;
-  stroke-width: 1px;
+:host ::ng-deep .line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1px;
 }

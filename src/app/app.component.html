@@ -1,18 +1,18 @@
 <mat-card>
-<mat-card-content>
+    <mat-card-content>
 
-<div class="chart">
-  <svg width="960" height="480">
+        <div class="chart">
+            <svg width="960" height="480">
     <g app-line-chart [options]="options.chart" [data]="data" />
-    <g app-scatter-chart [options]="options.chart" [data]="data" />
+    <g app-scatter-chart [(options)]="options.chart" [data]="data" />
   </svg>
-</div>
+        </div>
 
-<div class="controller" *ngFor="let sliderOpt of options.slider">
-    <slider id="sliderOpt.id" [options]="sliderOpt" (changed)="update()"></slider>
-</div>
+        <div class="controller" *ngFor="let sliderOpt of options.slider">
+            <app-slider id="sliderOpt.id" [options]="sliderOpt" (changed)="update()"></app-slider>
+        </div>
 
-<button (click)="update()">Update data</button>
+        <button (click)="update()">Update data</button> {{ options.chart.xDomain }} {{ options.chart.xDomain0 }}
 
-</mat-card-content>
+    </mat-card-content>
 </mat-card>
