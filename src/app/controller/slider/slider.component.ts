@@ -1,5 +1,9 @@
 import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 
+import { DataService } from '../../shared/services/data.service';
+import { ChartService } from '../../shared/services/chart.service';
+
+
 @Component({
     selector: 'app-slider',
     templateUrl: 'slider.component.html',
@@ -8,10 +12,18 @@ import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angu
     preserveWhitespaces: false,
 })
 export class SliderComponent {
+    private data: any;
+    private chart: any;
     @Input() options: any;
-    @Output() changed = new EventEmitter();
 
-    update() {
-        this.changed.emit();
+    constructor(_dataService: DataService, _chartService: ChartService) {
+        this.data = _dataService;
+        this.chart = _chartService;
     }
+
+    onChange() {
+        this.data.update();
+        this.chart.update();
+    }
+
 }

@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
+
 
 @Component({
     selector: 'app-chart',
@@ -6,11 +7,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./chart.component.css'],
 })
 export class ChartComponent {
-    @Input() options: any;
-    @Input() data: any;
-    @Output() changed = new EventEmitter();
 
-    update() {
-        this.changed.emit();
-    }
+    constructor() { }
+
 }

@@ -8,6 +8,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSliderModule } from '@angular/material/slider';
 
 import { D3Service } from 'd3-ng2-service';
+import { SliderService } from './shared/services/slider.service';
+import { DataService } from './shared/services/data.service';
+import { ChartService } from './shared/services/chart.service';
 
 import { AppComponent } from './app.component';
 import { ChartComponent } from './chart/chart.component';
@@ -36,7 +39,10 @@ import { SliderComponent } from './controller/slider/slider.component';
         MatSliderModule,
     ],
     providers: [
-        D3Service
+        D3Service,
+        SliderService,
+        ChartService,
+        DataService,
     ],
     bootstrap: [AppComponent]
 })

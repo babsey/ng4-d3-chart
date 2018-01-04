@@ -1,4 +1,7 @@
-import { Component, Input, NgZone, ElementRef, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, NgZone, ElementRef, OnInit } from '@angular/core';
+
+import { ChartService } from '../../shared/services/chart.service';
+import { DataService } from '../../shared/services/data.service';
 
 import {
     D3Service,
@@ -17,9 +20,9 @@ import {
     template: '',
     styleUrls: ['./scatter-chart.component.css'],
 })
-export class ScatterChartComponent implements OnInit, OnChanges {
+export class ScatterChartComponent implements OnInit {
     private d3: D3;
-    private parentNativeElement: any;
+    private nativeElement: any;
     private svg: Selection<SVGSVGElement, any, null, undefined>;
     private selector: Selection<SVGGElement, any, null, undefined>;
     private d3G: Selection<SVGGElement, any, null, undefined>;
@@ -27,20 +30,24 @@ export class ScatterChartComponent implements OnInit, OnChanges {
     private yScale: ScaleLinear<number, number>;
     private xAxis: Axis<number>;
     private yAxis: Axis<number>;
-    @Input() options: any;
-    @Input() data;
+    private options: any;
+    private data: any;
+    private updatedAt;
 
-    constructor(element: ElementRef, private ngZone: NgZone, d3Service: D3Service) {
-        this.d3 = d3Service.getD3();
-        this.parentNativeElement = element.nativeElement;
-        this.svg = this.d3.select(this.parentNativeElement.parentElement);
+    constructor(element: ElementRef, private ngZone: NgZone, _d3Service: D3Service, _chartService: ChartService, _dataService: DataService) {
+        this.d3 = _d3Service.getD3();
+        this.nativeElement = element.nativeElement;
+        this.svg = this.d3.select(this.nativeElement.parentElement);
         this.selector = this.svg.select<SVGGElement>('g[app-scatter-chart]');
         this.d3G = this.selector.append<SVGGElement>('g').attr('class', 'dots');
+        this.options = _chartService.options;
+        this.data = _dataService;
     }
 
     update() {
-        if (this.data.length == 0) return
-        console.log('Update scatter chart')
+        let data = this.data.get();
+        if (data.length == 0) return
+        // console.log('Update scatter chart')
         let d3 = this.d3;
         let svg = this.svg;
         let selector = this.selector;
@@ -56,19 +63,17 @@ export class ScatterChartComponent implements OnInit, OnChanges {
         selector.select<SVGGElement>('.axis--y').transition(t).call(this.yAxis);
 
         d3G.selectAll<SVGCircleElement, any>('.dot')
-            .data(this.data)
-            .exit()
-            .transition(t)
+            .data(data).exit()
             .attr('r', 0).remove();
 
         d3G.selectAll<SVGCircleElement, [number, number, number]>('.dot')
-            .data(this.data)
+            .data(data)
             .transition(t)
             .attr('cx', (d: any) => this.xScale(d.x))
             .attr('cy', (d: any) => this.yScale(d.y))
 
         d3G.selectAll<SVGCircleElement, any>('.dot')
-            .data(this.data)
+            .data(data)
             .enter().append<SVGCircleElement>('circle')
             .attr("class", "dot")
             .attr('cx', (d: any) => this.xScale(d.x))
@@ -76,21 +81,16 @@ export class ScatterChartComponent implements OnInit, OnChanges {
             .attr('r', 0)
             .transition(t)
             .attr('r', 2.5);
+
+        this.updatedAt = this.data.updatedAt;
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        console.log('Change scatter chart')
-        for (let propName in changes) {
-            let change = changes[propName];
-            let curVal = JSON.stringify(change.currentValue);
-            let prevVal = JSON.stringify(change.previousValue);
-            if (prevVal == undefined) return
-        }
-        this.update()
+    ngDoCheck() {
+        if (this.updatedAt == this.data.updatedAt) return
+        this.update();
     }
 
     ngOnInit() {
-        console.log('Init scatter chart')
         let self = this;
         let d3 = this.d3;
         let selector = this.selector;
@@ -115,20 +115,21 @@ export class ScatterChartComponent implements OnInit, OnChanges {
                 }
                 self.options.xDomain = self.options.xDomain0;
                 self.options.yDomain = self.options.yDomain0;
+                self.options.zoomed = false;
             } else {
                 self.options.xDomain = [s[0][0], s[1][0]].map(self.xScale.invert, self.xScale)
                 self.options.yDomain = [s[1][1], s[0][1]].map(self.yScale.invert, self.yScale)
                 selector.select<SVGGElement>('.brush').call(brush.move, null);
+                self.options.zoomed = true;
             }
-            self.update();
-
+            self.data.updatedAt = new Date();
         }
 
         function idled() {
             idleTimeout = null;
         }
 
-        if (this.parentNativeElement !== null) {
+        if (this.nativeElement !== null) {
             width = (this.options.width || +this.svg.attr('width')) - margin.left - margin.right;
             height = (this.options.height || +this.svg.attr('height')) - margin.top - margin.bottom;
             selector.attr('transform', 'translate(' +
@@ -144,13 +145,14 @@ export class ScatterChartComponent implements OnInit, OnChanges {
             brush = d3.brush().on('end', brushended);
             idleDelay = 350;
 
-            if (this.options.axis == 'bottom' || this.options.axis == 'both') {
+            let axis = this.options.axis || this.options.scatter.axis;
+            if (axis == 'bottom' || axis == 'both') {
                 selector.append<SVGGElement>('g')
                     .attr('class', 'axis axis--x')
                     .attr('transform', 'translate(0,' + height + ')')
                     .call(this.xAxis);
             }
-            if (this.options.axis == 'left' || this.options.axis == 'both') {
+            if (axis == 'left' || axis == 'both') {
                 selector.append<SVGGElement>('g')
                     .attr('class', 'axis axis--y')
                     .call(this.yAxis);
@@ -167,8 +169,9 @@ export class ScatterChartComponent implements OnInit, OnChanges {
                 .attr('height', height)
                 .attr('width', width);
 
+            let data = this.data.get();
             d3G.selectAll<SVGCircleElement, any>('circle')
-                .data(this.data)
+                .data(data)
                 .enter().append<SVGCircleElement>('circle')
                 .attr("class", "dot")
                 .attr('cx', (d: any) => this.xScale(d.x))
