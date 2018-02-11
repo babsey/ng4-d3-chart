@@ -11,9 +11,7 @@
         "lint": "ng lint",
         "e2e": "ng e2e",
         "electron": "electron .",
-        "electron-build": "ng build --prod && electron .",
-        "docker": "docker run -d -p 8080:80 ng4-d3-chart",
-        "docker-build": "docker build -t ng4-d3-chart ."
+        "electron-build": "ng build --prod && electron ."
     },
     "dependencies": {
         "@angular/animations": "^5.2.4",

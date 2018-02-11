@@ -32,11 +32,11 @@ Install docker `apt-get install docker`.
 
 The code for docker was adapted from angular4-docker-example (<https://github.com/avatsaev/angular4-docker-example>)
 
-Run `npm run docker-build` or `docker build -t ng4-d3-chart .` to build docker image.
+Run `docker build -t ng4-d3-chart .` to build docker image.
 
 ### Run docker container
 
-Run `npm run docker` or `docker run -d -p 8080:80 ng4-d3-chart` to start docker container. The app will be available at `http://localhost:8080/`.
+Run `docker run -d -p 8080:80 ng4-d3-chart` to start docker container. The app will be available at `http://localhost:8080/`.
 You can easily tweak the nginx config in ```nginx/default.conf```
 
 ## Running unit tests
