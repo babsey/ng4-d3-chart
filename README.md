@@ -18,7 +18,23 @@ Run `npm run electron` to start the app with electron.
 
 ## Build and start with electron
 
-Run `npm run electron-build` to build the project and start the app with electron.
+`npm run electron-build` to build the project and start the app with electron.
+
+## Build a docker image
+The code for docker was adapted from angular4-docker-example (<https://github.com/avatsaev/angular4-docker-example>)
+
+```
+$ docker build -t ng4-d3-chart .
+```
+
+## Run docker container
+
+```
+$ docker run -d -p 8080:80 ng4-d3-chart
+```
+
+The app will be available at `http://localhost:8080/`.
+You can easily tweak the nginx config in ```nginx/default.conf```
 
 ## Running unit tests
 
