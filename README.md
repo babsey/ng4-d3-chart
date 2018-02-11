@@ -12,28 +12,31 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Run `npm build` to build the project for a production build. The build artifacts will be stored in the `dist/` directory.
 
-## Start with electron
+## Electron
+
+Install electron `npm install electron`.
+
+### Start electron
 
 Run `npm run electron` to start the app with electron.
 
-## Build and start with electron
+### Build the app and then start electron
 
 `npm run electron-build` to build the project and start the app with electron.
 
-## Build a docker image
+## Docker
+
+Install docker `apt-get install docker`.
+
+### Build a docker image
+
 The code for docker was adapted from angular4-docker-example (<https://github.com/avatsaev/angular4-docker-example>)
 
-```
-$ docker build -t ng4-d3-chart .
-```
+Run `npm run docker-build` or `docker build -t ng4-d3-chart .` to build docker image.
 
-## Run docker container
+### Run docker container
 
-```
-$ docker run -d -p 8080:80 ng4-d3-chart
-```
-
-The app will be available at `http://localhost:8080/`.
+Run `npm run docker` or `docker run -d -p 8080:80 ng4-d3-chart` to start docker container. The app will be available at `http://localhost:8080/`.
 You can easily tweak the nginx config in ```nginx/default.conf```
 
 ## Running unit tests
