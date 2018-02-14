@@ -48,6 +48,13 @@ export class DataService {
         return data
     }
 
+    shuffle() {
+        this.options[0].value = parseInt(randomNormal(1000, 300)());
+        this.options[1].value = randomNormal(0, 0.5)();
+        this.options[2].value = randomNormal(0.5, 0.15)();
+        this.update()
+    }
+
     update() {
         let n: number = this.options[0].value;
         let mean: number = this.options[1].value;
@@ -58,5 +65,4 @@ export class DataService {
         this._reduced = this.reduce(this._data, 5000);
         this.updatedAt = new Date();
     }
-
 }

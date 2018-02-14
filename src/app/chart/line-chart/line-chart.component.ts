@@ -60,8 +60,11 @@ export class LineChartComponent implements OnInit {
         let d3G = this.d3G;
         let line: Line<any>;
         let t: Transition<SVGSVGElement, any, null, undefined>;
+        
+        let margin = this.options.line.margin || this.options.margin;
+        let width = (this.options.width || +this.svg.attr('width')) - margin.left - margin.right;
 
-        this.xScale.domain(this.options.xDomain);
+        this.xScale.domain(this.options.xDomain).range([0, width]);
         this.yScale.domain(this.options.yDomain);
 
         t = svg.transition().duration(this.options.transition.duration || 500);

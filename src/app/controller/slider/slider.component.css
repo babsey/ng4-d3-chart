@@ -1,16 +1,20 @@
-.content {
+.slider-container {
+    width: 240px;
     position: relative;
 }
 
-.label {
+.slider-header {
     position: absolute;
-    z-index: -1;
 }
 
-mat-slider {
-    width: 300px;
+.slider-content {
+    display: inline-flex;
 }
 
-mat-form-field {
-    width: 64px;
+.slider {
+    width: 190px;
+}
+
+.slider-input {
+    width: 50px;
 }

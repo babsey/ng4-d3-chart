@@ -1,11 +1,21 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material';
-import { MatCardModule } from '@angular/material/card';
+import {
+    MatCardModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatToolbarModule,
+} from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSliderModule } from '@angular/material/slider';
 
 import { D3Service } from 'd3-ng2-service';
 import { SliderService } from './shared/services/slider.service';
@@ -23,26 +33,34 @@ import { SliderComponent } from './controller/slider/slider.component';
 @NgModule({
     declarations: [
         AppComponent,
-        ControllerComponent,
-        SliderComponent,
         ChartComponent,
+        ControllerComponent,
         LineChartComponent,
-        ScatterChartComponent
+        ScatterChartComponent,
+        SliderComponent,
     ],
     imports: [
         BrowserModule,
         FormsModule,
-        MatInputModule,
         MatCardModule,
-        NoopAnimationsModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatExpansionModule,
         MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatMenuModule,
+        MatSelectModule,
+        MatSidenavModule,
         MatSliderModule,
+        MatToolbarModule,
+        NoopAnimationsModule,
     ],
     providers: [
-        D3Service,
-        SliderService,
         ChartService,
+        D3Service,
         DataService,
+        SliderService,
     ],
     bootstrap: [AppComponent]
 })

@@ -14,11 +14,13 @@ export class ControllerComponent {
     private data: any
     private chart: any;
     public options: any;
+    public nodes: any;
 
     constructor(_sliderService: SliderService, _dataService: DataService, _chartService: ChartService) {
         this.options = _sliderService.options;
         this.data = _dataService;
         this.chart = _chartService;
+        this.nodes = [1,2,3];
     }
 
     update() {

@@ -1,6 +1,24 @@
-<mat-card>
-    <mat-card-content>
-        <app-chart></app-chart>
+<mat-toolbar color="primary">
+    <h1>Angular4 D3 chart</h1>
+    <span class="fill-remaining-space"></span>
+        <button mat-icon-button (click)="dataShuffle()">
+        <mat-icon>casino</mat-icon>
+    </button>
+    <button mat-icon-button (click)="chartUpdate()">
+        <mat-icon>update</mat-icon>
+    </button>
+    <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+    </button>
+</mat-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" [(opened)]="controllerOpened" position="end"
+        (openedChange)="openedChange()">
         <app-controller></app-controller>
-    </mat-card-content>
-</mat-card>
+    </mat-sidenav>
+
+    <mat-sidenav-content id="graph" (window:resize)="chartUpdate()">
+        <app-chart></app-chart>
+    </mat-sidenav-content>
+</mat-sidenav-container>

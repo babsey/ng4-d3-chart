@@ -12,19 +12,35 @@ import { ChartService } from './shared/services/chart.service';
 export class AppComponent implements OnInit {
     private data: any;
     private chart: any;
+    public controllerOpened: boolean;
 
     constructor(_dataService: DataService, _chartService: ChartService) {
         this.data = _dataService;
         this.chart = _chartService;
     }
 
-    log(data) {
-        console.log(data)
+    dataShuffle() {
+        this.data.shuffle()
+        this.chartUpdate()
+    }
+
+    chartUpdate() {
+        let graph = document.getElementById('graph');
+        let chart = document.getElementById('chart');
+        this.chart.options.width = graph.offsetWidth.toString();
+        chart.setAttribute('width', this.chart.options.width);
+        this.data.updatedAt = new Date();
+        this.chart.update();
+    }
+
+    openedChange() {
+        setTimeout(() => this.chartUpdate(), 400)
     }
 
     ngOnInit() {
+        this.controllerOpened = true;
         this.data.update()
-        this.chart.update()
+        this.chartUpdate()
     }
 
 }
