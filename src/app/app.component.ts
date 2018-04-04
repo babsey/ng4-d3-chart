@@ -11,6 +11,7 @@ import { ControllerService } from './shared/services/controller.service';
     styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+    public height: string = '500px';
     public data: any;
     public chartOptions: any;
     public controllerOptions: any;
@@ -26,6 +27,16 @@ export class AppComponent implements OnInit {
         };
     }
 
+    resize() {
+        // console.log('Resize')
+        this.height = (window.innerHeight - document.getElementById('content').offsetTop).toString() + 'px';
+        let width = document.getElementById('graph').offsetWidth;
+        let chart = document.getElementById('chart');
+        chart.setAttribute('width', width.toString());
+        this.chartOptions.width = width;
+        this._chartService.changed.emit();
+    }
+
     dataUpdate() {
         // console.log('Update data')
         let random = randomNormal(this.params.mean, this.params.std);
@@ -37,16 +48,6 @@ export class AppComponent implements OnInit {
         this.controllerOptions.slider[0].value = this.params.n;
         this.controllerOptions.slider[1].value = this.params.mean;
         this.controllerOptions.slider[2].value = this.params.std;
-    }
-
-    chartResize() {
-        // console.log('Resize chart')
-        let graph = document.getElementById('graph');
-        let chart = document.getElementById('chart');
-        let width = graph.offsetWidth;
-        chart.setAttribute('width', width.toString());
-        this.chartOptions.width = width;
-        this._chartService.changed.emit()
     }
 
     paramsShuffle() {
@@ -70,12 +71,12 @@ export class AppComponent implements OnInit {
 
         this.dataUpdate()
         this.controllerUpdate()
-        setTimeout(() => this.chartResize(), 100)
+        setTimeout(() => this.resize(), 100)
     }
 
     sidenavToggle(sidenav) {
         sidenav.toggle()
-        setTimeout(() => this.chartResize(), 500)
+        setTimeout(() => this.resize(), 500)
     }
 
 

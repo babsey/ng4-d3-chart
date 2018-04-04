@@ -1,9 +1,11 @@
-.fill-remaining-space {
-  /* This fills the remaining space, by using flexbox.
-     Every toolbar row uses a flexbox row layout. */
-  flex: 1 1 auto;
+mat-sidenav {
+  background-color: rgb(250, 250, 250) !important;
 }
 
 mat-sidenav-container {
     height: 700px;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }

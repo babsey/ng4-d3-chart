@@ -2,30 +2,12 @@
 @include mat-core();
 
 // Define an alternate light theme.
-$light-primary: mat-palette($mat-light-blue, 900);
-$light-accent:  mat-palette($mat-light-blue, 700);
-$light-warn:    mat-palette($mat-orange);
-$light-theme:   mat-light-theme($light-primary, $light-accent, $light-warn);
+$nest-primary:  mat-palette($mat-grey, 50);
+$nest-accent: mat-palette($mat-deep-orange, 400);
+$nest-warn:    mat-palette($mat-red);
 
-// Define an alternate dark theme.
-$dark-primary: mat-palette($mat-blue-grey);
-$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
-$dark-warn:    mat-palette($mat-deep-orange);
-$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+$nest-light-theme: mat-light-theme($nest-primary, $nest-accent, $nest-warn);
 
-
-.light-material-theme {
-    @include angular-material-theme($light-theme);
-}
-
-.dark-material-theme {
-    @include angular-material-theme($dark-theme);
-}
-
-.light-slider-theme {
-    @include mat-slider-theme($light-theme);
-}
-
-.dark-slider-theme {
-    @include mat-slider-theme($dark-theme);
+.nest-theme {
+    @include angular-material-theme($nest-light-theme);
 }

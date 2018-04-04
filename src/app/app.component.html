@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
     <h1>Angular4 D3 chart</h1>
-    <span class="fill-remaining-space"></span>
+    <span class="spacer"></span>
     <button mat-icon-button (click)="dataUpdate()">
         <mat-icon>refresh</mat-icon>
     </button>
@@ -12,12 +12,12 @@
     </button>
 </mat-toolbar>
 
-<mat-sidenav-container>
+<mat-sidenav-container id="content" [style.height]="height" (window:resize)="resize()">
     <mat-sidenav #sidenav mode="side" [(opened)]="controllerOptions.opened" position="end">
         <app-controller [options]="controllerOptions"></app-controller>
     </mat-sidenav>
 
-    <mat-sidenav-content id="graph" (window:resize)="chartResize()">
+    <mat-sidenav-content id="graph">
         <app-chart [data]="data" [options]="chartOptions"></app-chart>
     </mat-sidenav-content>
 </mat-sidenav-container>
