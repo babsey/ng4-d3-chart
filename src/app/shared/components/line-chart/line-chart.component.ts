@@ -77,6 +77,10 @@ export class LineChartComponent implements OnInit, OnChanges {
 
         let lines = this.selector.select<SVGGElement>('.lines');
 
+        lines.select<SVGGElement>('.overlay')
+            .transition(t)
+            .attr('width', this.width);
+
         lines.selectAll<SVGPathElement, number[]>('path')
             .data([data])
             .transition(t)
