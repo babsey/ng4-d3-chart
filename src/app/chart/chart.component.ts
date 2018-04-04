@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-chart',
@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
     styleUrls: ['./chart.component.css'],
 })
 export class ChartComponent {
+    @Input() data: any;
+    @Input() options: any;
 
+    constructor() {}
 }

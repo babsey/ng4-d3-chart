@@ -7,3 +7,8 @@
 .node-select {
     width: 240px
 }
+
+app-node {
+    margin: 1px;
+    line-height: 1em;
+}

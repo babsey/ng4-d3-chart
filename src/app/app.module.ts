@@ -18,16 +18,18 @@ import {
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { D3Service } from 'd3-ng2-service';
-import { SliderService } from './shared/services/slider.service';
-import { DataService } from './shared/services/data.service';
 import { ChartService } from './shared/services/chart.service';
+import { ControllerService } from './shared/services/controller.service';
+import { DataService } from './shared/services/data.service';
+
+import { LineChartComponent } from './shared/components/line-chart/line-chart.component';
+import { ScatterChartComponent } from './shared/components/scatter-chart/scatter-chart.component';
+import { SliderComponent } from './shared/components/slider/slider.component';
 
 import { AppComponent } from './app.component';
 import { ChartComponent } from './chart/chart.component';
-import { LineChartComponent } from './chart/line-chart/line-chart.component';
-import { ScatterChartComponent } from './chart/scatter-chart/scatter-chart.component';
+import { NodeComponent } from './controller/node/node.component';
 import { ControllerComponent } from './controller/controller.component';
-import { SliderComponent } from './controller/slider/slider.component';
 
 
 @NgModule({
@@ -36,6 +38,7 @@ import { SliderComponent } from './controller/slider/slider.component';
         ChartComponent,
         ControllerComponent,
         LineChartComponent,
+        NodeComponent,
         ScatterChartComponent,
         SliderComponent,
     ],
@@ -57,10 +60,10 @@ import { SliderComponent } from './controller/slider/slider.component';
         NoopAnimationsModule,
     ],
     providers: [
-        ChartService,
         D3Service,
+        ChartService,
+        ControllerService,
         DataService,
-        SliderService,
     ],
     bootstrap: [AppComponent]
 })

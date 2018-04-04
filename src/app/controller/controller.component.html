@@ -1,25 +1,4 @@
-<mat-card>
-    <div class="controller" *ngFor="let sliderOpt of options">
-        <app-slider [options]="sliderOpt"></app-slider>
-    </div>
-</mat-card>
+<app-node class="node" [options]="options"></app-node>
 
-<mat-accordion>
-    <mat-expansion-panel *ngFor="let node of nodes">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Node {{ node }}
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-form-field class="node-select">
-        <mat-select placeholder="Node" [value]="node">
-          <mat-option disableRipple *ngFor="let nodeOpt of nodes" [value]="nodeOpt">
-            {{ nodeOpt }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-        <div class="controller" *ngFor="let sliderOpt of options">
-            <app-slider [options]="sliderOpt"></app-slider>
-        </div>
-    </mat-expansion-panel>
-</mat-accordion>
+<app-node class="node" *ngFor="let node of nodes" [node]="node" [options]="options">
+</app-node>

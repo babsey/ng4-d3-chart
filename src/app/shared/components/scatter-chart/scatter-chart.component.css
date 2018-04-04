@@ -1,0 +1,12 @@
+:host ::ng-deep .dot {
+    fill: steelblue;
+}
+
+:host ::ng-deep .axis text {
+    fill: black;
+}
+
+:host ::ng-deep .axis path {
+    stroke: black;
+    fill: none;
+}

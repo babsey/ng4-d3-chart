@@ -1,44 +1,36 @@
-import { Injectable } from '@angular/core';
-import { randomNormal, range } from 'd3';
-
-import { SliderService } from './slider.service';
-
+import {
+    Injectable,
+    EventEmitter
+} from '@angular/core';
 
 @Injectable()
 export class DataService {
-    private options: any;
-    private _data: any;
-    private _reduced: any;
-    public updatedAt: any;
+    public changed: EventEmitter<any>;
 
-    constructor(_sliderService: SliderService) {
-        this.options = _sliderService.options;
-    }
-
-    get() {
-        return this._reduced;
+    constructor() {
+        this.changed = new EventEmitter();
     }
 
     reduce(data, maxVal) {
         if (data.length < maxVal) return data
 
-        var delta = Math.floor(data.length / maxVal);
-        let reduced = data.filter(function(value, index, Arr) {
+        let delta = Math.floor(data.length / maxVal);
+        let reducedData = data.filter(function(value, index, Arr) {
             return index % delta == 0;
         });
 
-        return reduced;
+        return reducedData;
     }
 
-    filter(data) {
-        let xDomain = this.options.chart.xDomain;
+    filter(data, options) {
+        let xDomain = options.chart.xDomain;
         if (xDomain) {
             data = data.filter(function(d) {
                 return d.x > xDomain[0] && d.x < xDomain[1]
             })
         }
 
-        let yDomain = this.options.chart.yDomain;
+        let yDomain = options.chart.yDomain;
         if (yDomain) {
             data = data.filter(function(d) {
                 return d.y > yDomain[0] && d.y < yDomain[1]
@@ -48,21 +40,4 @@ export class DataService {
         return data
     }
 
-    shuffle() {
-        this.options[0].value = parseInt(randomNormal(1000, 300)());
-        this.options[1].value = randomNormal(0, 0.5)();
-        this.options[2].value = randomNormal(0.5, 0.15)();
-        this.update()
-    }
-
-    update() {
-        let n: number = this.options[0].value;
-        let mean: number = this.options[1].value;
-        let std: number = this.options[2].value;
-
-        let random = randomNormal(mean, std);
-        this._data = range(n).map((i) => { return { x: i, y: random() } });
-        this._reduced = this.reduce(this._data, 5000);
-        this.updatedAt = new Date();
-    }
 }
